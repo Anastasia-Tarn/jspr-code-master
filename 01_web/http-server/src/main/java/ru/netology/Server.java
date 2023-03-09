@@ -1,14 +1,17 @@
 package ru.netology;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.net.URIBuilder;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -161,6 +164,32 @@ public class Server {
         }
 
         handlers.get(method).put(path, handler);
+    }
+
+    public String getQueryParam (String path, String paramName) {
+        try {
+            List<NameValuePair> queryParams = new URIBuilder(path).getQueryParams();
+            for (NameValuePair pair : queryParams) {
+                if (pair.getName().equals(paramName)) {
+                    return pair.getValue();
+                }
+            }
+            return StringUtils.EMPTY;
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Map<String, List<String>> getQueryParams (String path) throws URISyntaxException {
+        URIBuilder builder =  new URIBuilder(path);
+        Map<String, List<String>> params = new LinkedHashMap<>();
+        for (NameValuePair nameValuePair : builder.getQueryParams()) {
+            if (!params.containsKey(nameValuePair.getName())) {
+                params.put(nameValuePair.getName(), new ArrayList<>());
+            }
+            params.get(nameValuePair.getName()).add(nameValuePair.getValue());
+        }
+        return params;
     }
 }
 
