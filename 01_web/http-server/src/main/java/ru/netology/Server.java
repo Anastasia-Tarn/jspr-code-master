@@ -90,6 +90,8 @@ public class Server {
                 final var bodyBytes = in.readNBytes(length);
 
 
+                var request = new Request(requestLine[0], requestLine[1], requestLine[2], headers, bodyBytes);
+                request.getQueryParams();
 
 
                 final var filePath = Path.of(".", "public", path);
@@ -161,5 +163,10 @@ public class Server {
 
         handlers.get(method).put(path, handler);
     }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 }
 
