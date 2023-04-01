@@ -90,7 +90,6 @@ public class Server {
                 final var bodyBytes = in.readNBytes(length);
 
 
-                final var request = new Request(requestLine[0], requestLine[1], requestLine[2], headers, bodyBytes);
 
 
                 final var filePath = Path.of(".", "public", path);
