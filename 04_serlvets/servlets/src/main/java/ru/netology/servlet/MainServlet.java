@@ -29,20 +29,21 @@ public class MainServlet extends HttpServlet {
         controller.all(resp);
         return;
       }
+
       if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
         // easy way
-        final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
-        controller.getById(id, resp);
+        controller.getById(getPostID (path), resp);
         return;
       }
+
       if (method.equals("POST") && path.equals("/api/posts")) {
         controller.save(req.getReader(), resp);
         return;
       }
+
       if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
         // easy way
-        final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
-        controller.removeById(id, resp);
+        controller.getById(getPostID (path), resp);
         return;
       }
       resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -50,6 +51,10 @@ public class MainServlet extends HttpServlet {
       e.printStackTrace();
       resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
+  }
+
+  private long getPostID(String path) {
+    return Long.parseLong(path.substring(path.lastIndexOf("/")));
   }
 }
 
