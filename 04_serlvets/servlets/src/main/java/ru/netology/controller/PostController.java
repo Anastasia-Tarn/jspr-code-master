@@ -42,24 +42,10 @@ public class PostController {
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         final var post = gson.fromJson(body, Post.class);
-        int count = 0;
-        if (post.getId() == 0) {
-            final var data = service.save(post);
-            response.getWriter().print(gson.toJson(data));
-            count++;
-            post.setId(count);
-        }
-
-        for (Post post1 : service.all()) {
-            if (post.getId() == post1.getId()) {
-                service.removeById(post.getId());
-                final var data = service.save(post);
-                response.getWriter().print(gson.toJson(data));
-            }
-        }
-
-
+        final var data = service.save(post);
+        response.getWriter().print(gson.toJson(data));
     }
+
 
     public void removeById(long id, HttpServletResponse response) {
         service.removeById(id);
