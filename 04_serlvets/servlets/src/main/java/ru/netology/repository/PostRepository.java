@@ -8,6 +8,18 @@ import java.util.Optional;
 
 // Stub
 public class PostRepository {
+<<<<<<< Updated upstream
+=======
+
+  private AtomicLong count;
+
+  private final ConcurrentHashMap<Long, Post> posts;
+
+  public PostRepository() {
+    this.posts = posts;
+  }
+
+>>>>>>> Stashed changes
   public List<Post> all() {
     return Collections.emptyList();
   }
