@@ -5,21 +5,20 @@ import ru.netology.model.Post;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
 public class PostRepository {
-<<<<<<< Updated upstream
-=======
 
   private AtomicLong count;
 
-  private final ConcurrentHashMap<Long, Post> posts;
+  private ConcurrentHashMap<Long, Post> posts = new ConcurrentHashMap<>();
 
   public PostRepository() {
     this.posts = posts;
   }
 
->>>>>>> Stashed changes
   public List<Post> all() {
     return Collections.emptyList();
   }

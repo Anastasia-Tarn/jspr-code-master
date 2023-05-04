@@ -10,9 +10,8 @@ import ru.netology.service.PostService;
 @Configuration
 public class JavaConfig {
   @Bean
-  // название метода - название бина
+
   public PostController postController() {
-    // вызов метода и есть DI
     return new PostController(postService());
   }
 
