@@ -7,6 +7,7 @@ import ru.netology.service.PostService;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Optional;
 
 public class PostController {
   public static final String APPLICATION_JSON = "application/json";
@@ -24,7 +25,14 @@ public class PostController {
   }
 
   public void getById(long id, HttpServletResponse response) {
-    // TODO: deserialize request & serialize response
+    response.setContentType(APPLICATION_JSON);
+    final var gson = new Gson();
+    final var data = service.getById(id);
+    try {
+      response.getWriter().print(gson.toJson(data));
+    } catch (IOException e) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
   }
 
   public void save(Reader body, HttpServletResponse response) throws IOException {
@@ -36,6 +44,7 @@ public class PostController {
   }
 
   public void removeById(long id, HttpServletResponse response) {
-    // TODO: deserialize request & serialize response
+    service.removeById(id);
+    response.setStatus(HttpServletResponse.SC_OK);
   }
 }
